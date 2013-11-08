@@ -1,0 +1,23 @@
+{
+  "name": "scaffold",
+  "version": "0.1.0",
+  "authors": [
+    "叶晓毅 <agustine103@gmail.com>"
+  ],
+  "description": "test scaffold",
+  "main": "src/main.css",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": ">=1.10.2",
+    "backbone": ">=1.1.0",
+    "underscore": ">=1.5.2",
+    "iscroll": "4.2.5"
+  }
+}
