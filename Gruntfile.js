@@ -4,7 +4,6 @@ module.exports = function(grunt) {
   grunt.file.defaultEncoding = 'utf8';
   grunt.config.set('jsFiles', packageJson.jsFiles);
   grunt.config.set('cssFiles', packageJson.cssFiles);
-  grunt.config.set('projectName', packageJson.name);
   // Project configuration.
   grunt.initConfig({
     // Metadata.
@@ -26,12 +25,20 @@ module.exports = function(grunt) {
         src: ['lib/<%= pkg.name %>.js'],
         dest: 'dist/<%= pkg.name %>.js'
       },
+      libspre: {
+        files: {
+          'libs/libs.js' : grunt.config.get('jsFiles').libs,
+          'libs/customlibs.js' : grunt.config.get('jsFiles').customlibs,
+          'libs/libs.css' : grunt.config.get('cssFiles').libs,
+          'libs/customlibs.css' : grunt.config.get('cssFiles').customlibs
+        }
+      },
       libs: {
         files: {
-          'libs/lib.js' : grunt.config.get('jsFiles').libs,
-          'libs/lib.css' : grunt.config.get('cssFiles').libs
+          'libs/core.js' : ['libs/libs.js', 'libs/customlibs.js'],
+          'libs/core.css' : ['libs/libs.css', 'libs/customlibs.css']
         }
-      }
+      },
     },
     jst: {
       compile: {
@@ -62,15 +69,15 @@ module.exports = function(grunt) {
         dest: 'dist/<%= pkg.name %>.min.js'
       },
       libs: {
-        src: 'libs/lib.js',
-        dest: 'libs/lib.min.js',
+        src: 'libs/core.js',
+        dest: 'libs/core.min.js',
         
       }
     },
     cssmin: {
       libs: {
         files: {
-          'libs/lib.min.css': 'libs/lib.css'
+          'libs/core.min.css': 'libs/core.css'
         }
       }
     },
@@ -149,10 +156,14 @@ module.exports = function(grunt) {
   // Default task.
   grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify']);
 
-  grunt.registerTask('refreshLibs', ['clean:libs', 'concat:libs', 'uglify:libs', 'cssmin:libs']);
+  grunt.registerTask('refreshLibs', ['clean:libs', 'concat:libspre', 'concat:libs', 'uglify:libs', 'cssmin:libs']);
 
   grunt.registerTask('initProject', 'init project', function(){
-    var projectName = grunt.config.get('projectName');
-    console.log(grunt.template.process);
+    var projectInfo = {
+      projectName : grunt.config.data.pkg.name.replace('\.', '')
+    }
+    var basejsTemplate = grunt.file.read('.project/base.js.tpl');
+    var basejs = grunt.template.process(basejsTemplate, {data: projectInfo});
+    grunt.file.write('src/base.js', basejs);
   });
 };

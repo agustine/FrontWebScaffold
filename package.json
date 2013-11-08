@@ -1,5 +1,5 @@
 {
-  "name": "scaffold",
+  "name": "Project.Name",
   "version": "0.1.0",
   "scripts": {
     "test": "grunt qunit"
