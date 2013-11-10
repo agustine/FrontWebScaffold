@@ -113,7 +113,7 @@ npm install
 
 4. 使用
 
-###项目初始化命令
+###项目初始化
 
 目前只有功能使用模版生成公用的base.js文件...可以在Gruntfile.js 中自定义
 ~~~
@@ -122,8 +122,16 @@ grunt initProject
 
 ###打包压缩依赖的脚本文件
 
-该命令会按package.json 文件中的jsFiles、cssFiles配置，将libs中的文件合并为libs.js和libs.css
+该命令会按package.json 文件中的jsFiles、cssFiles配置，将libs中的文件合并为libs.js和libs.css, customlibs中的文件合并为customlibs.js和customlibs.css
+然后将libs.js、customlibs.js、src/base.js合并为core.js, libs.css、customlibs.css合并为core.css, 最终压缩为core.min.js、core.min.map、core.min.css
 ~~~
 grunt refreshLibs
+~~~
+
+###打包templates为jst
+
+将templates文件夹下的所有html文件，打包成template.js文件（jst）
+~~~
+grunt jst
 ~~~
 
