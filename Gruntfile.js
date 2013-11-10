@@ -35,8 +35,8 @@ module.exports = function(grunt) {
       },
       libs: {
         files: {
-          'libs/core.js' : ['libs/libs.js', 'libs/customlibs.js'],
-          'libs/core.css' : ['libs/libs.css', 'libs/customlibs.css']
+          'libs/core.js' : ['libs/libs.js', 'libs/customlibs.js', 'src/base.js'],
+          'libs/core.css' : ['libs/libs.css', 'libs/customlibs.css', 'src/base.css']
         }
       },
     },
