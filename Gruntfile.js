@@ -35,7 +35,7 @@ module.exports = function(grunt) {
       },
       libs: {
         files: {
-          'libs/core.js' : ['libs/libs.js', 'libs/customlibs.js'],
+          'libs/core.js' : ['libs/libs.js', 'libs/customlibs.js', 'src/base.js'],
           'libs/core.css' : ['libs/libs.css', 'libs/customlibs.css']
         }
       },
@@ -60,6 +60,10 @@ module.exports = function(grunt) {
       options: {
         banner: '<%= banner %>',
         report: 'gzip',
+        sourceMappingURL: function(path){
+          var names = path.split('/');
+          return names[names.length - 1].replace(/\.js$/, '.map');
+        },
         sourceMap: function(path){
           return path.replace(/\.js$/, '.map');
         }
@@ -94,6 +98,19 @@ module.exports = function(grunt) {
         src: ["libs/**"]
       }
     },
+
+
+    connect: {
+      server: {
+        options: {
+          port: 9001,
+          base: '',
+          hostname: '192.168.1.34',
+          keepalive:true
+        }
+      }
+    },
+
 
     jshint: {
       options: {
@@ -145,7 +162,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-jst');
-
+  grunt.loadNpmTasks('grunt-contrib-connect');
   // grunt.registerTask('copyLibFiles', 'copy library files', function() {
   //   grunt.util.recurse(grunt.file.readJSON('package.json').libs, function(path){
   //     var names = path.split('/');
