@@ -12796,3 +12796,11 @@ else window.iScroll = iScroll;
 })(window, document);
 
 ;/*separator*/
+
+;/*separator*/
+var $ProjectName = $.extend(true, $ProjectName, {
+	config: {
+		ajaxDomain: '/',
+		ajaxDataType: 'jsonp'
+	}
+})
